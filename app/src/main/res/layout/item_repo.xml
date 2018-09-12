@@ -39,6 +39,8 @@
             <LinearLayout
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="4dp"
+                android:layout_marginRight="4dp"
+                android:gravity="right"
                 android:id="@+id/linearLayout_stats_layout"
                 android:layout_width="match_parent"
                 android:orientation="horizontal"
