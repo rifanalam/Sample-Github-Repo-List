@@ -2,6 +2,7 @@ package com.xapo.github.samplegithub.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.thefinestartist.finestwebview.FinestWebView;
 import com.xapo.github.samplegithub.R;
 import com.xapo.github.samplegithub.models.RepoListResponse;
 
@@ -35,13 +37,20 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        RepoListResponse.Items items = itemsList.get(position);
+        final RepoListResponse.Items items = itemsList.get(position);
 
         holder.textView_repo_title.setText(items.getName());
         holder.textView_repo_description.setText(items.getFullName());
         holder.textView_repo_watchers.setText(""+items.getWatchers());
         holder.textView_repo_language.setText(items.getLanguage());
         Glide.with(context).load(items.getOwner().getAvatarUrl()).into(holder.imageView_avatar);
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new FinestWebView.Builder(context).show(items.getHtmlUrl());
+            }
+        });
     }
 
     @Override
@@ -55,6 +64,7 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.ViewHo
         TextView textView_repo_watchers;
         TextView textView_repo_description;
         TextView textView_repo_language;
+        CardView cardView;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -63,6 +73,7 @@ public class RepoListAdapter extends RecyclerView.Adapter<RepoListAdapter.ViewHo
             textView_repo_description = itemView.findViewById(R.id.textView_repo_description);
             textView_repo_watchers = itemView.findViewById(R.id.textView_repo_watchers);
             textView_repo_language = itemView.findViewById(R.id.textView_repo_language);
+            cardView = itemView.findViewById(R.id.cardView);
         }
     }
 }
